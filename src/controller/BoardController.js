@@ -73,7 +73,14 @@ router.post('/board', function(req, res) {
 				return res.status(500).json({msg: 'Internal Server Error.', success: false});
 			}
 			
-			res.status(200).json({success: true});
+			res.status(200).json({
+				success: true,
+				data: {
+					title: title,
+					content: content,
+					userIdx: userIdx
+				}
+			});
 			connection.end();
 		});
 	});
@@ -133,6 +140,7 @@ router.delete('/board/:id', function(req, res) {
 		
 		connection.query(formattedSql, function (error, results, fields) {
 			if (error) {
+				console.log(error);
 				return res.status(500).json({msg: 'Internal Server Error.', success: false});
 			}
 			
